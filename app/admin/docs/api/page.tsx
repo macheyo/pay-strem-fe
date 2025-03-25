@@ -253,7 +253,17 @@ export default function ApiDocumentationPage() {
               Reference documentation for the PayStream API
             </p>
           </div>
-          <Button variant="outline" size="sm" className="h-8 gap-1">
+          <Button
+            variant="outline"
+            size="sm"
+            className="h-8 gap-1"
+            onClick={() =>
+              window.open(
+                "https://transaction-service-x6gzrstzqq-uc.a.run.app/swagger-ui",
+                "_blank"
+              )
+            }
+          >
             <ExternalLink className="h-3.5 w-3.5" />
             <span>Open Swagger</span>
           </Button>

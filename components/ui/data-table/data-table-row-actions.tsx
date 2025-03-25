@@ -2,7 +2,7 @@
 
 import { DotsHorizontalIcon } from "@radix-ui/react-icons";
 import { Row } from "@tanstack/react-table";
-import { z, ZodSchema } from "zod";
+import { ZodSchema } from "zod";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -51,7 +51,8 @@ export function DataTableRowActions<TData>({
   }
 
   // Type guard to check if 'label' exists on rowData
-  const hasLabel = (data: any): data is { label: string } => "label" in data;
+  const hasLabel = (data: unknown): data is { label: string } =>
+    typeof data === "object" && data !== null && "label" in data;
 
   return (
     <DropdownMenu>

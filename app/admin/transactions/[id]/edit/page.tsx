@@ -1,5 +1,3 @@
-"use server";
-
 import { redirect } from "next/navigation";
 import UserEditTransaction from "./components/user-edit-transaction";
 import { requireAuth } from "@/lib/server-auth";
@@ -42,9 +40,11 @@ interface ApiConfig {
   userRoles: string[];
 }
 
-interface Props {
+// Define our props type using a type alias instead of an interface
+type Props = {
   params: { id: string };
-}
+  searchParams?: Record<string, string | string[]>;
+};
 
 async function fetchTransaction(
   jwtClaims: Record<string, unknown>,
@@ -95,7 +95,7 @@ async function fetchTransaction(
   };
 }
 
-export default async function TransactionPage({ params }: Readonly<Props>) {
+export default async function TransactionPage({ params }: Props) {
   // Get the authenticated session (redirects to login if not authenticated)
   const { user } = await requireAuth();
 
