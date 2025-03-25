@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "Fev": "next dev --turbopack --no-lint",
+    "dev": "next dev --turbopack --no-lint --no-typechecking",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
