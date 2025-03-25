@@ -37,7 +37,7 @@ export function RejectTransactionAction({
       setIsRejecting(true);
 
       // Construct the reject URL based on the transaction ID
-      const rejectUrl = `/api/transactions/${transaction.id}/reject`;
+      const rejectUrl = `/api/v1/transactions/${transaction.id}/reject`;
 
       // Make the reject request using cookies for authentication
       // The server middleware will extract auth headers from the cookie
