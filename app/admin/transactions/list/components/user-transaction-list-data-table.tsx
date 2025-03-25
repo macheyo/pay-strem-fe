@@ -8,6 +8,14 @@ import {
   Row,
   useReactTable,
   getCoreRowModel,
+  ColumnFiltersState,
+  SortingState,
+  VisibilityState,
+  getFilteredRowModel,
+  getSortedRowModel,
+  getFacetedRowModel,
+  getFacetedUniqueValues,
+  getPaginationRowModel,
 } from "@tanstack/react-table";
 import { Transaction } from "./columns";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -234,15 +242,31 @@ export default function UserTransactionListDataTable({
   // State for row selection
   const [rowSelection, setRowSelection] = useState({});
 
-  // Create the table instance
+  // State for column filters and sorting
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const [sorting, setSorting] = useState<SortingState>([]);
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+
+  // Create the table instance with full filtering capabilities
   const table = useReactTable({
     data: transactions,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getFacetedRowModel: getFacetedRowModel(),
+    getFacetedUniqueValues: getFacetedUniqueValues(),
+    getPaginationRowModel: getPaginationRowModel(),
     enableRowSelection: true,
     onRowSelectionChange: setRowSelection,
+    onColumnFiltersChange: setColumnFilters,
+    onSortingChange: setSorting,
+    onColumnVisibilityChange: setColumnVisibility,
     state: {
       rowSelection,
+      columnFilters,
+      sorting,
+      columnVisibility,
     },
   });
 
