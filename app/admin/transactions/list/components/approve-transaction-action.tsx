@@ -40,7 +40,7 @@ export function ApproveTransactionAction({
       // Make the approve request using cookies for authentication
       // The server middleware will extract auth headers from the cookie
       const response = await fetch(approveUrl, {
-        method: "POST",
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
