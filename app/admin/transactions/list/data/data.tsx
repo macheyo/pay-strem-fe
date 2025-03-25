@@ -4,7 +4,7 @@ import {
   ExclamationTriangleIcon,
   UpdateIcon,
 } from "@radix-ui/react-icons";
-import { ExternalLinkIcon, icons } from "lucide-react";
+import { ExternalLinkIcon } from "lucide-react";
 
 export const statuses = [
   {
