@@ -18,7 +18,7 @@ import { useRouter } from "next/navigation";
 
 interface DeleteTransactionActionProps {
   row: Row<Transaction>;
-  deleteUrl: string;
+
   apiConfig: ApiConfig;
   onDeleted: (transactionId: number) => void;
 }
@@ -33,7 +33,6 @@ interface ApiConfig {
 
 export function DeleteTransactionAction({
   row,
-  deleteUrl,
   apiConfig,
   onDeleted,
 }: DeleteTransactionActionProps) {

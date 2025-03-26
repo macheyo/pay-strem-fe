@@ -18,12 +18,22 @@ import { useRouter } from "next/navigation";
 
 interface ApproveTransactionActionProps {
   row: Row<Transaction>;
+  apiConfig: ApiConfig;
   onApproved: (transactionId: number) => void;
+}
+
+interface ApiConfig {
+  apiHost: string;
+  tenantId: string;
+  userName: string;
+  userEmail: string;
+  userRoles: string[];
 }
 
 export function ApproveTransactionAction({
   row,
   onApproved,
+  apiConfig,
 }: ApproveTransactionActionProps) {
   const [open, setOpen] = useState(false);
   const [isApproving, setIsApproving] = useState(false);
@@ -42,6 +52,11 @@ export function ApproveTransactionAction({
       const response = await fetch(approveUrl, {
         method: "PUT",
         headers: {
+          accept: "application/json",
+          "X-Tenant-ID": "one-republic",
+          "X-User-ID": apiConfig.userName,
+          "X-User-Email": apiConfig.userName,
+          "X-User-Roles": apiConfig.userRoles.join(","),
           "Content-Type": "application/json",
         },
         body: JSON.stringify({

@@ -19,12 +19,22 @@ import { Textarea } from "@/components/ui/textarea";
 
 interface RejectTransactionActionProps {
   row: Row<Transaction>;
+  apiConfig: ApiConfig;
   onRejected: (transactionId: number) => void;
+}
+
+interface ApiConfig {
+  apiHost: string;
+  tenantId: string;
+  userName: string;
+  userEmail: string;
+  userRoles: string[];
 }
 
 export function RejectTransactionAction({
   row,
   onRejected,
+  apiConfig,
 }: RejectTransactionActionProps) {
   const [open, setOpen] = useState(false);
   const [isRejecting, setIsRejecting] = useState(false);
@@ -44,6 +54,11 @@ export function RejectTransactionAction({
       const response = await fetch(rejectUrl, {
         method: "PUT",
         headers: {
+          accept: "application/json",
+          "X-Tenant-ID": "one-republic",
+          "X-User-ID": apiConfig.userName,
+          "X-User-Email": apiConfig.userName,
+          "X-User-Roles": apiConfig.userRoles.join(","),
           "Content-Type": "application/json",
         },
         body: JSON.stringify({

@@ -131,19 +131,20 @@ const ActionsCell = ({
       {canApproveReject && (
         <ApproveTransactionAction
           row={row}
+          apiConfig={apiConfig}
           onApproved={() => onDelete(transaction.id)}
         />
       )}
       {canApproveReject && (
         <RejectTransactionAction
           row={row}
+          apiConfig={apiConfig}
           onRejected={() => onDelete(transaction.id)}
         />
       )}
       {deleteUrl && (
         <DeleteTransactionAction
           row={row}
-          deleteUrl={deleteUrl}
           apiConfig={apiConfig}
           onDeleted={() => onDelete(transaction.id)}
         />
