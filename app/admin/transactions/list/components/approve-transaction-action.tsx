@@ -45,7 +45,7 @@ export function ApproveTransactionAction({
       setIsApproving(true);
 
       // Construct the approve URL based on the transaction ID
-      const approveUrl = `/api/v1/transactions/${transaction.id}/approve`;
+      const approveUrl = `${apiConfig.apiHost}/api/v1/transactions/${transaction.id}/approve`;
 
       // Make the approve request using cookies for authentication
       // The server middleware will extract auth headers from the cookie
