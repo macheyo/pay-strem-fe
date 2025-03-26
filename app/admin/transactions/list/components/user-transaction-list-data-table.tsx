@@ -50,19 +50,29 @@ interface TransactionResponse {
   transactions: Transaction[];
 }
 
+interface ApiConfig {
+  apiHost: string;
+  tenantId: string;
+  userName: string;
+  userEmail: string;
+  userRoles: string[];
+}
 interface Props {
   data: TransactionResponse;
   columns: ColumnDef<Transaction>[];
+  apiConfig: ApiConfig;
 }
 
 // Create a custom ActionsCell component that uses the HATEOAS links
 const ActionsCell = ({
   row,
   links,
+  apiConfig,
   onDelete,
 }: {
   row: Row<Transaction>;
   links: TransactionLinks;
+  apiConfig: ApiConfig;
   onDelete: (id: number) => void;
 }) => {
   const transaction = row.original;
@@ -134,6 +144,7 @@ const ActionsCell = ({
         <DeleteTransactionAction
           row={row}
           deleteUrl={deleteUrl}
+          apiConfig={apiConfig}
           onDeleted={() => onDelete(transaction.id)}
         />
       )}
@@ -144,6 +155,7 @@ const ActionsCell = ({
 export default function UserTransactionListDataTable({
   data,
   columns: initialColumns,
+  apiConfig,
 }: Readonly<Props>) {
   const router = useRouter();
   // Create state for transactions to handle animations
@@ -232,6 +244,7 @@ export default function UserTransactionListDataTable({
       cell: ({ row }) => (
         <ActionsCell
           row={row}
+          apiConfig={apiConfig}
           links={data._links}
           onDelete={handleTransactionDeleted}
         />
@@ -355,8 +368,11 @@ export default function UserTransactionListDataTable({
 
   return (
     <Card>
-      <CardHeader className="flex flex-row items-center justify-between">
-        <div>
+      {/* Adjust header layout: remove justify-between, add gap */}
+      <CardHeader className="flex flex-row items-center gap-4">
+        <div className="flex-grow">
+          {" "}
+          {/* Allow title section to take available space */}
           <CardTitle>Transactions</CardTitle>
           <p className="text-sm text-muted-foreground">
             Showing {transactions.length} of {count} total transactions

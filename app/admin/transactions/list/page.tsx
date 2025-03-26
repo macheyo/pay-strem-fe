@@ -36,19 +36,50 @@ async function fetchTransactions(jwtClaims: Record<string, unknown>) {
   return response.json();
 }
 
+interface ApiConfig {
+  apiHost: string;
+  tenantId: string;
+  userName: string;
+  userEmail: string;
+  userRoles: string[];
+}
+
 export default async function TransactionsPage() {
   // Get the authenticated session (redirects to login if not authenticated)
   const { user } = await requireAuth();
 
   try {
+    // Get user information
+    const userName =
+      (user.rawClaims.name as string) || (user.rawClaims.sub as string) || "";
+    const userEmail = (user.rawClaims.email as string) || "";
+    const userRolesString = Array.isArray(user.rawClaims.groups)
+      ? user.rawClaims.groups.join(",")
+      : "";
+    // Convert userRoles to an array as expected by the component
+    const userRoles = userRolesString ? userRolesString.split(",") : [];
+    const tenantId = "one-republic";
     // Fetch transactions using JWT claims
     const data = await fetchTransactions(user.rawClaims);
+
+    // Create API config for the component
+    const apiConfig: ApiConfig = {
+      apiHost: process.env.NEXT_PUBLIC_API_HOST || "http://localhost:8080",
+      tenantId: tenantId,
+      userName,
+      userEmail,
+      userRoles,
+    };
 
     // Pass the transaction data to the component wrapped in AdminLayout
     return (
       <AdminLayout>
         <div className="space-y-6">
-          <UserTransactionListDataTable data={data} columns={columns} />
+          <UserTransactionListDataTable
+            data={data}
+            columns={columns}
+            apiConfig={apiConfig}
+          />
         </div>
       </AdminLayout>
     );

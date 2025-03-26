@@ -19,12 +19,22 @@ import { useRouter } from "next/navigation";
 interface DeleteTransactionActionProps {
   row: Row<Transaction>;
   deleteUrl: string;
+  apiConfig: ApiConfig;
   onDeleted: (transactionId: number) => void;
+}
+
+interface ApiConfig {
+  apiHost: string;
+  tenantId: string;
+  userName: string;
+  userEmail: string;
+  userRoles: string[];
 }
 
 export function DeleteTransactionAction({
   row,
   deleteUrl,
+  apiConfig,
   onDeleted,
 }: DeleteTransactionActionProps) {
   const [open, setOpen] = useState(false);
@@ -38,15 +48,26 @@ export function DeleteTransactionAction({
 
       // Make the delete request using cookies for authentication
       // The server middleware will extract auth headers from the cookie
-      const response = await fetch(deleteUrl, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        `${apiConfig.apiHost}/api/v1/transactions/${transaction.id}`,
+        {
+          method: "DELETE",
+          headers: {
+            accept: "application/json",
+            "X-Tenant-ID": "one-republic",
+            "X-User-ID": apiConfig.userName,
+            "X-User-Email": apiConfig.userName,
+            "X-User-Roles": apiConfig.userRoles.join(","),
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      const responseBody = await response.text();
+      console.log("Response:::", responseBody);
 
       if (!response.ok) {
-        throw new Error(`Failed to delete transaction: ${response.statusText}`);
+        throw new Error(`Failed to delete transaction: ${responseBody}`);
       }
 
       // Close the dialog

@@ -6,7 +6,7 @@ import { DataTableFacetedFilter } from "./data-table-faceted-filter";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { DataTableViewOptions } from "./data-table-view-options";
-import { FilterableColumn } from "@/lib/types";
+import { FilterableColumn } from "../../../lib/types"; // Corrected import path
 
 interface Props<TData> {
   filterPlaceholder?: string;
@@ -24,7 +24,8 @@ export function DataTableToolbar<TData>({
   const isFiltered = table.getState().columnFilters.length > 0;
 
   return (
-    <div className="flex items-center justify-between">
+    /* Adjust layout: remove justify-between, add gap */
+    <div className="flex items-center gap-2">
       <div className="flex flex-1 items-center space-x-2">
         {/* Dynamic filter for the text input based on filterColumnId */}
         {filterColumnId && (

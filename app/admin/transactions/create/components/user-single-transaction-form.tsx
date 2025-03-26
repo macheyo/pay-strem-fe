@@ -245,7 +245,7 @@ export default function UserSingleTransactionForm({
   return (
     <div className="min-h-screen bg-gradient-to-b from-background via-background to-muted/20">
       {/* Header */}
-      <header className="border-b bg-background/95 backdrop-blur-sm">
+      {/* <header className="border-b bg-background/95 backdrop-blur-sm">
         <div className="container mx-auto flex h-16 items-center justify-between px-4">
           <div className="flex items-center gap-2">
             <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary text-primary-foreground">
@@ -263,7 +263,7 @@ export default function UserSingleTransactionForm({
             </Badge>
           </div>
         </div>
-      </header>
+      </header> */}
       <div className="container mx-auto px-4 py-8">
         <div className="mx-auto w-full max-w-3xl">
           {/* Progress Steps */}
@@ -314,15 +314,27 @@ export default function UserSingleTransactionForm({
           {step === 1 && (
             <Card className="overflow-hidden border-none bg-card shadow-lg">
               <CardHeader className="bg-gradient-to-r from-primary/10 to-primary/5 pb-8">
-                <CardTitle className="flex items-center gap-2 text-xl">
-                  <DollarSign className="h-5 w-5 text-primary" />
-                  Payment Details
-                </CardTitle>
-                <CardDescription>
-                  Enter the details for this payment
-                </CardDescription>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <CardTitle className="flex items-center gap-2 text-xl">
+                      <DollarSign className="h-5 w-5 text-primary" />
+                      Payment Details
+                    </CardTitle>
+                    <CardDescription>
+                      Enter the details for this payment
+                    </CardDescription>
+                  </div>
+                  <Badge
+                    variant="outline"
+                    className="flex items-center gap-1 border-primary/30 bg-primary/5 text-primary"
+                  >
+                    <Lock className="h-3 w-3" />
+                    <span>Secure Transaction</span>
+                  </Badge>
+                </div>
               </CardHeader>
-              <CardContent className="relative -mt-4 space-y-8 rounded-t-3xl bg-card px-6 pt-6">
+              {/* Reduce vertical spacing */}
+              <CardContent className="relative -mt-4 space-y-6 rounded-t-3xl bg-card px-6 pt-6">
                 {/* Amount */}
                 <div className="space-y-3">
                   <Label
@@ -391,7 +403,8 @@ export default function UserSingleTransactionForm({
                     )}
                   </div>
 
-                  <div className="grid gap-5 md:grid-cols-2">
+                  {/* Adjust grid gap */}
+                  <div className="grid gap-4 md:grid-cols-2">
                     <div className="space-y-3">
                       <Label htmlFor="recipientAccount">Account Number</Label>
                       <Input
